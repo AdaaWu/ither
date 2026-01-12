@@ -90,9 +90,13 @@ const handleCreatePost = async (data: ForumPostInput): Promise<void> => {
 }
 
 const handleViewPost = async (postId: string): Promise<void> => {
-  await loadPost(postId)
+  console.log('[Forum] handleViewPost called with postId:', postId)
+  const post = await loadPost(postId)
+  console.log('[Forum] loadPost result:', post)
   await loadComments(postId)
+  console.log('[Forum] currentPost:', currentPost.value)
   showDetail.value = true
+  console.log('[Forum] showDetail set to true')
 }
 
 const handleBackToList = (): void => {

@@ -3,7 +3,7 @@ import type { Ref, ComputedRef } from 'vue'
 import { MOCK_MODE, firebaseDb, appId } from '@/shared/services/firebase'
 import type {
   ForumPost, ForumPostInput, ForumComment, ForumCommentInput,
-  ForumCategory, UserProfile
+  ForumCategory
 } from '@/types'
 
 // Mock 資料
@@ -131,8 +131,9 @@ const MOCK_COMMENTS: ForumComment[] = [
 ]
 
 export function useForum(
-  userId: Ref<string | null>,
-  userProfile: Ref<UserProfile | null>
+  userId: ComputedRef<string>,
+  userName: ComputedRef<string>,
+  userRole: ComputedRef<string>
 ) {
   // --- State ---
   const posts: Ref<ForumPost[]> = ref([])
@@ -195,17 +196,17 @@ export function useForum(
 
   // --- 載入單一貼文 ---
   const loadPost = async (postId: string): Promise<ForumPost | null> => {
-    if (MOCK_MODE) {
-      const post = [...MOCK_POSTS, ...localPosts.value].find(p => p.id === postId)
-      if (post) {
-        currentPost.value = post
-        return post
-      }
-      return null
+    // 先從本地資料找（包含 MOCK 資料和本地新增的）
+    const localPost = [...MOCK_POSTS, ...localPosts.value].find(p => p.id === postId)
+    if (localPost) {
+      currentPost.value = localPost
+      return localPost
     }
 
-    if (!firebaseDb.value) return null
+    // 如果是 MOCK 模式或沒有 Firebase，直接返回 null
+    if (MOCK_MODE || !firebaseDb.value) return null
 
+    // 從 Firebase 查詢
     try {
       const { doc, getDoc } = await import('firebase/firestore')
       const postRef = doc(firebaseDb.value, 'artifacts', appId, 'public', 'data', 'forumPosts', postId)
@@ -225,13 +226,13 @@ export function useForum(
 
   // --- 建立貼文 ---
   const createPost = async (data: ForumPostInput): Promise<string | null> => {
-    if (!userId.value || !userProfile.value) return null
+    if (!userId.value || !userName.value) return null
 
     const newPost: ForumPost = {
       id: `local-post-${Date.now()}`,
       userId: userId.value,
-      userName: userProfile.value.nickname,
-      userRole: userProfile.value.role,
+      userName: userName.value,
+      userRole: userRole.value,
       category: data.category,
       title: data.title,
       content: data.content,
@@ -260,8 +261,8 @@ export function useForum(
         {
           ...data,
           userId: userId.value,
-          userName: userProfile.value.nickname,
-          userRole: userProfile.value.role,
+          userName: userName.value,
+          userRole: userRole.value,
           status: 'active',
           viewCount: 0,
           likeCount: 0,
@@ -385,14 +386,14 @@ export function useForum(
 
   // --- 新增留言 ---
   const addComment = async (data: ForumCommentInput): Promise<string | null> => {
-    if (!userId.value || !userProfile.value) return null
+    if (!userId.value || !userName.value) return null
 
     const newComment: ForumComment = {
       id: `local-comment-${Date.now()}`,
       postId: data.postId,
       userId: userId.value,
-      userName: userProfile.value.nickname,
-      userRole: userProfile.value.role,
+      userName: userName.value,
+      userRole: userRole.value,
       content: data.content,
       likeCount: 0,
       likedBy: [],
@@ -422,8 +423,8 @@ export function useForum(
         {
           postId: data.postId,
           userId: userId.value,
-          userName: userProfile.value.nickname,
-          userRole: userProfile.value.role,
+          userName: userName.value,
+          userRole: userRole.value,
           content: data.content,
           likeCount: 0,
           likedBy: [],
@@ -444,6 +445,32 @@ export function useForum(
     } catch (error) {
       console.error('[Forum] Add comment error:', error)
       return null
+    }
+  }
+
+  // --- 刪除留言 ---
+  const deleteComment = async (commentId: string): Promise<boolean> => {
+    if (MOCK_MODE) {
+      localComments.value = localComments.value.filter(c => c.id !== commentId)
+      if (currentPost.value) {
+        await loadComments(currentPost.value.id)
+      }
+      return true
+    }
+
+    if (!firebaseDb.value) return false
+
+    try {
+      const { doc, deleteDoc } = await import('firebase/firestore')
+      const commentRef = doc(firebaseDb.value, 'artifacts', appId, 'public', 'data', 'forumComments', commentId)
+      await deleteDoc(commentRef)
+      if (currentPost.value) {
+        await loadComments(currentPost.value.id)
+      }
+      return true
+    } catch (error) {
+      console.error('[Forum] Delete comment error:', error)
+      return false
     }
   }
 
@@ -512,6 +539,7 @@ export function useForum(
     togglePostLike,
     loadComments,
     addComment,
+    deleteComment,
     toggleCommentLike
   }
 }

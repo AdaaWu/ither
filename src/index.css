@@ -65,6 +65,53 @@
   animation-name: zoom-in-95;
 }
 
+/* Scroll Reveal base */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays */
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+.stagger-6 { transition-delay: 0.6s; }
+.stagger-7 { transition-delay: 0.7s; }
+
+/* Parchment texture overlay */
+.parchment-bg {
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(253, 248, 240, 0.5) 0%, transparent 50%),
+                    radial-gradient(ellipse at 80% 50%, rgba(253, 248, 240, 0.3) 0%, transparent 50%);
+}
+
+.dark .parchment-bg {
+  background-image: radial-gradient(ellipse at 20% 50%, rgba(30, 27, 75, 0.3) 0%, transparent 50%),
+                    radial-gradient(ellipse at 80% 50%, rgba(30, 27, 75, 0.2) 0%, transparent 50%);
+}
+
+/* Grid lines texture */
+.grid-texture {
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.dark .grid-texture {
+  background-image:
+    linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
 /* 隱藏捲軸但保持可捲動 */
 .scrollbar-hide {
   -ms-overflow-style: none;

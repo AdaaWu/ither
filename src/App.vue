@@ -3,7 +3,8 @@ import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import type { Ref } from 'vue'
 
 // --- 模組匯入 ---
-import { useAuth, WelcomeScreen } from '@/modules/auth'
+import { useAuth } from '@/modules/auth'
+import LandingPage from '@/modules/landing/LandingPage.vue'
 import { useProfile, UserProfileModal, UserProfileView } from '@/modules/profile'
 import { useChat, ChatView, CHANNELS } from '@/modules/chat'
 import { useMentorship, MentorshipView } from '@/modules/mentorship'
@@ -260,8 +261,8 @@ const handleMentorshipRefresh = async (): Promise<void> => {
 </script>
 
 <template>
-  <!-- 歡迎畫面 -->
-  <WelcomeScreen
+  <!-- 歡迎畫面 (Landing Page) -->
+  <LandingPage
     v-if="!isLoggedIn"
     :dark-mode="darkMode"
     :mock-mode="MOCK_MODE"

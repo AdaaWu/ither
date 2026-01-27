@@ -26,9 +26,18 @@ const items = [
 <template>
   <section
     ref="containerRef"
-    :class="['py-24 px-6 lg:px-12', darkMode ? 'bg-slate-950' : 'bg-parchment-50']"
+    :class="['relative py-24 px-6 lg:px-12 overflow-hidden', darkMode ? 'bg-slate-950' : 'bg-parchment-50']"
   >
-    <div class="max-w-7xl mx-auto">
+    <!-- Background decorations -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div :class="darkMode ? 'opacity-20' : 'opacity-35'">
+        <div :class="['absolute -top-20 -left-20 w-[400px] h-[400px] rounded-full mix-blend-multiply filter blur-3xl animate-blob', darkMode ? 'bg-amber-600' : 'bg-amber-200']"></div>
+        <div :class="['absolute -bottom-16 right-1/4 w-[450px] h-[450px] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000', darkMode ? 'bg-teal-600' : 'bg-teal-200']"></div>
+      </div>
+    </div>
+    <div class="absolute inset-0 grid-texture pointer-events-none" />
+
+    <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">
         <h2

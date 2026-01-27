@@ -37,9 +37,18 @@ const testimonials = [
 <template>
   <section
     ref="containerRef"
-    :class="['py-24 px-6 lg:px-12', darkMode ? 'bg-slate-900/50' : 'bg-parchment-100']"
+    :class="['relative py-24 px-6 lg:px-12 overflow-hidden', darkMode ? 'bg-slate-900/50' : 'bg-parchment-100']"
   >
-    <div class="max-w-7xl mx-auto">
+    <!-- Background decorations -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div :class="darkMode ? 'opacity-15' : 'opacity-30'">
+        <div :class="['absolute -top-20 left-1/3 w-[450px] h-[450px] rounded-full mix-blend-multiply filter blur-3xl animate-blob', darkMode ? 'bg-indigo-600' : 'bg-indigo-200']"></div>
+        <div :class="['absolute -bottom-16 right-1/4 w-[400px] h-[400px] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000', darkMode ? 'bg-purple-600' : 'bg-purple-200']"></div>
+      </div>
+    </div>
+    <div class="absolute inset-0 parchment-bg pointer-events-none" />
+
+    <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">
         <h2

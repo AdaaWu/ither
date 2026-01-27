@@ -30,9 +30,18 @@ const faqs = [
 <template>
   <section
     ref="containerRef"
-    :class="['py-24 px-6 lg:px-12', darkMode ? 'bg-slate-950' : 'bg-parchment-50']"
+    :class="['relative py-24 px-6 lg:px-12 overflow-hidden', darkMode ? 'bg-slate-950' : 'bg-parchment-50']"
   >
-    <div class="max-w-2xl mx-auto">
+    <!-- Background decorations -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div :class="darkMode ? 'opacity-20' : 'opacity-30'">
+        <div :class="['absolute -top-16 -right-16 w-[400px] h-[400px] rounded-full mix-blend-multiply filter blur-3xl animate-blob', darkMode ? 'bg-indigo-600' : 'bg-indigo-200']"></div>
+        <div :class="['absolute -bottom-20 -left-20 w-[350px] h-[350px] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000', darkMode ? 'bg-purple-600' : 'bg-purple-200']"></div>
+      </div>
+    </div>
+    <div class="absolute inset-0 grid-texture pointer-events-none" />
+
+    <div class="relative max-w-2xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">
         <h2

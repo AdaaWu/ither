@@ -86,9 +86,19 @@ const accentColors: Record<string, { bg: string; bgDark: string; text: string; t
 <template>
   <section
     ref="containerRef"
-    :class="['py-24 px-6 lg:px-12', darkMode ? 'bg-slate-950' : 'bg-parchment-50']"
+    :class="['relative py-24 px-6 lg:px-12 overflow-hidden', darkMode ? 'bg-slate-950' : 'bg-parchment-50']"
   >
-    <div class="max-w-7xl mx-auto">
+    <!-- Background decorations -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div :class="darkMode ? 'opacity-20' : 'opacity-40'">
+        <div :class="['absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full mix-blend-multiply filter blur-3xl animate-blob', darkMode ? 'bg-indigo-600' : 'bg-indigo-200']"></div>
+        <div :class="['absolute -bottom-32 -left-16 w-[400px] h-[400px] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000', darkMode ? 'bg-purple-600' : 'bg-purple-200']"></div>
+        <div :class="['absolute top-1/2 right-1/3 w-[350px] h-[350px] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000', darkMode ? 'bg-pink-600' : 'bg-pink-200']"></div>
+      </div>
+    </div>
+    <div class="absolute inset-0 grid-texture pointer-events-none" />
+
+    <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">
         <h2

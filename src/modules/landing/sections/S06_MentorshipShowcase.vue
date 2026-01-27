@@ -27,9 +27,18 @@ const mentees = [
 <template>
   <section
     ref="containerRef"
-    :class="['py-24 px-6 lg:px-12', darkMode ? 'bg-slate-900/50' : 'bg-white']"
+    :class="['relative py-24 px-6 lg:px-12 overflow-hidden', darkMode ? 'bg-slate-900/50' : 'bg-white']"
   >
-    <div class="max-w-7xl mx-auto">
+    <!-- Background decorations -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div :class="darkMode ? 'opacity-15' : 'opacity-30'">
+        <div :class="['absolute -top-16 -left-16 w-[400px] h-[400px] rounded-full mix-blend-multiply filter blur-3xl animate-blob', darkMode ? 'bg-purple-600' : 'bg-purple-100']"></div>
+        <div :class="['absolute -bottom-24 -right-16 w-[450px] h-[450px] rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000', darkMode ? 'bg-pink-600' : 'bg-pink-100']"></div>
+      </div>
+    </div>
+    <div class="absolute inset-0 parchment-bg pointer-events-none" />
+
+    <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">
         <span

@@ -66,6 +66,24 @@ const colorMap: Record<string, { bg: string; bgDark: string; text: string; textD
     </div>
     <div class="absolute inset-0 grid-texture pointer-events-none" />
 
+    <!-- Themed SVG: stacked document cards -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <svg class="absolute top-8 right-16 w-40 h-40" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.05]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#c084fc' : '#9333ea'" stroke-width="1">
+        <rect x="20" y="30" width="120" height="150" rx="8" />
+        <rect x="35" y="15" width="120" height="150" rx="8" />
+        <rect x="50" y="0" width="120" height="150" rx="8" />
+        <line x1="65" y1="30" x2="150" y2="30" stroke-width="0.5" />
+        <line x1="65" y1="50" x2="140" y2="50" stroke-width="0.5" />
+        <line x1="65" y1="70" x2="130" y2="70" stroke-width="0.5" />
+      </svg>
+      <svg class="absolute bottom-12 left-8 w-32 h-32" :class="darkMode ? 'opacity-[0.03]' : 'opacity-[0.04]'" viewBox="0 0 100 100" fill="none" :stroke="darkMode ? '#818cf8' : '#6366f1'" stroke-width="0.8">
+        <rect x="5" y="5" width="60" height="80" rx="4" />
+        <line x1="15" y1="20" x2="55" y2="20" stroke-width="0.5" />
+        <line x1="15" y1="35" x2="50" y2="35" stroke-width="0.5" />
+        <line x1="15" y1="50" x2="45" y2="50" stroke-width="0.5" />
+      </svg>
+    </div>
+
     <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">

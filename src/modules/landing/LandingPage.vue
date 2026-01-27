@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import type { Ref } from 'vue'
 import { ChevronDown, ChevronUp, Code2, X } from 'lucide-vue-next'
 import SkillTagInput from '@/shared/components/SkillTagInput.vue'
@@ -46,6 +46,16 @@ const openJoinModal = () => {
   showJoinModal.value = true
 }
 
+// --- Scroll Progress ---
+const scrollProgress = ref(0)
+const onScroll = () => {
+  const scrollTop = window.scrollY
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight
+  scrollProgress.value = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+}
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
+
 const handleSubmit = (): void => {
   if (!nickname.value.trim()) return
   isSubmitting.value = true
@@ -64,9 +74,19 @@ const handleSubmit = (): void => {
 
 <template>
   <div :class="[
-    'min-h-screen transition-colors duration-500',
+    'min-h-screen transition-colors duration-500 noise-overlay',
     darkMode ? 'bg-slate-950 text-slate-100' : 'bg-parchment-50 text-slate-900'
   ]">
+    <!-- Scroll Progress Indicator -->
+    <div class="fixed right-3 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+      <div :class="['w-0.5 h-32 rounded-full overflow-hidden', darkMode ? 'bg-slate-800' : 'bg-slate-200/60']">
+        <div
+          class="w-full rounded-full bg-gradient-to-b from-indigo-500 to-purple-500 transition-all duration-150"
+          :style="{ height: `${scrollProgress}%` }"
+        />
+      </div>
+    </div>
+
     <S01_HeroSection :dark-mode="darkMode" @join="openJoinModal" />
     <S02_ManifestoTicker :dark-mode="darkMode" />
     <S03_PlatformBento :dark-mode="darkMode" />

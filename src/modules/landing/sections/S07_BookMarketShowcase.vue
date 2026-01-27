@@ -37,6 +37,23 @@ const items = [
     </div>
     <div class="absolute inset-0 grid-texture pointer-events-none" />
 
+    <!-- Themed SVG: book + shopping bag outlines -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <!-- Book outline -->
+      <svg class="absolute top-12 left-8 w-44 h-44" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.05]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#fbbf24' : '#d97706'" stroke-width="1">
+        <rect x="30" y="20" width="100" height="140" rx="4" />
+        <line x1="45" y1="20" x2="45" y2="160" />
+        <line x1="55" y1="45" x2="115" y2="45" stroke-width="0.5" />
+        <line x1="55" y1="60" x2="110" y2="60" stroke-width="0.5" />
+        <line x1="55" y1="75" x2="100" y2="75" stroke-width="0.5" />
+      </svg>
+      <!-- Shopping bag outline -->
+      <svg class="absolute bottom-8 right-12 w-36 h-36" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.05]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#2dd4bf' : '#0d9488'" stroke-width="1">
+        <rect x="40" y="60" width="120" height="120" rx="8" />
+        <path d="M70,60 L70,40 Q100,10 130,40 L130,60" />
+      </svg>
+    </div>
+
     <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">

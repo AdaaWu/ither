@@ -38,6 +38,22 @@ const features = [
     </div>
     <div class="absolute inset-0 parchment-bg pointer-events-none" />
 
+    <!-- Themed SVG: scattered chat bubbles -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <svg class="absolute top-12 right-12 w-48 h-48" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.05]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#818cf8' : '#6366f1'" stroke-width="1">
+        <rect x="10" y="10" width="120" height="70" rx="16" />
+        <polygon points="40,80 55,95 70,80" />
+      </svg>
+      <svg class="absolute bottom-16 left-8 w-36 h-36" :class="darkMode ? 'opacity-[0.03]' : 'opacity-[0.04]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#c084fc' : '#a855f7'" stroke-width="1">
+        <rect x="40" y="50" width="140" height="80" rx="16" />
+        <polygon points="140,130 155,150 120,130" />
+      </svg>
+      <svg class="absolute top-1/2 left-1/3 w-24 h-24" :class="darkMode ? 'opacity-[0.03]' : 'opacity-[0.04]'" viewBox="0 0 100 100" fill="none" :stroke="darkMode ? '#818cf8' : '#6366f1'" stroke-width="0.8">
+        <rect x="5" y="5" width="60" height="35" rx="10" />
+        <polygon points="20,40 30,50 40,40" />
+      </svg>
+    </div>
+
     <div class="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <!-- Mock Chat UI -->
       <div

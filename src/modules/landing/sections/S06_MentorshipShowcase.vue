@@ -38,6 +38,23 @@ const mentees = [
     </div>
     <div class="absolute inset-0 parchment-bg pointer-events-none" />
 
+    <!-- Themed SVG: connection network -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <svg class="absolute top-1/4 right-8 w-56 h-56" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.05]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#e879f9' : '#c026d3'" stroke-width="0.8">
+        <circle cx="40" cy="40" r="12" /><circle cx="160" cy="40" r="12" /><circle cx="100" cy="100" r="16" />
+        <circle cx="40" cy="160" r="12" /><circle cx="160" cy="160" r="12" />
+        <line x1="52" y1="40" x2="84" y2="90" stroke-dasharray="4 4" />
+        <line x1="148" y1="40" x2="116" y2="90" stroke-dasharray="4 4" />
+        <line x1="52" y1="160" x2="84" y2="110" stroke-dasharray="4 4" />
+        <line x1="148" y1="160" x2="116" y2="110" stroke-dasharray="4 4" />
+      </svg>
+      <svg class="absolute bottom-16 left-12 w-32 h-32" :class="darkMode ? 'opacity-[0.03]' : 'opacity-[0.04]'" viewBox="0 0 100 100" fill="none" :stroke="darkMode ? '#a78bfa' : '#7c3aed'" stroke-width="0.6">
+        <circle cx="20" cy="50" r="8" /><circle cx="80" cy="30" r="8" /><circle cx="80" cy="70" r="8" />
+        <line x1="28" y1="47" x2="72" y2="33" stroke-dasharray="3 3" />
+        <line x1="28" y1="53" x2="72" y2="67" stroke-dasharray="3 3" />
+      </svg>
+    </div>
+
     <div class="relative max-w-7xl mx-auto">
       <!-- Header -->
       <div class="text-center mb-16">

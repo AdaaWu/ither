@@ -37,6 +37,23 @@ const skills = ['Vue.js', 'TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Docke
     </div>
     <div class="absolute inset-0 parchment-bg pointer-events-none" />
 
+    <!-- Themed SVG: hexagon / radar chart outline -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <svg class="absolute top-16 right-16 w-52 h-52" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.05]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#60a5fa' : '#2563eb'" stroke-width="0.8">
+        <polygon points="100,10 178,55 178,145 100,190 22,145 22,55" />
+        <polygon points="100,40 155,70 155,130 100,160 45,130 45,70" stroke-dasharray="4 4" />
+        <polygon points="100,70 130,85 130,115 100,130 70,115 70,85" />
+        <line x1="100" y1="10" x2="100" y2="190" stroke-width="0.3" />
+        <line x1="22" y1="55" x2="178" y2="145" stroke-width="0.3" />
+        <line x1="178" y1="55" x2="22" y2="145" stroke-width="0.3" />
+      </svg>
+      <svg class="absolute bottom-12 left-8 w-28 h-28" :class="darkMode ? 'opacity-[0.03]' : 'opacity-[0.04]'" viewBox="0 0 100 100" fill="none" :stroke="darkMode ? '#818cf8' : '#6366f1'" stroke-width="0.6">
+        <circle cx="50" cy="50" r="40" />
+        <circle cx="50" cy="50" r="25" stroke-dasharray="3 3" />
+        <circle cx="50" cy="50" r="10" />
+      </svg>
+    </div>
+
     <div class="relative max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       <!-- Mock Profile UI -->
       <div

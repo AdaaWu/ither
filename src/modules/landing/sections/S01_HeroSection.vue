@@ -24,6 +24,32 @@ const scrollToNext = () => {
   const el = document.getElementById('manifesto-ticker')
   el?.scrollIntoView({ behavior: 'smooth' })
 }
+
+// Floating code symbols
+const codeSymbols = [
+  { text: '</>', x: '8%', y: '15%', size: 'text-2xl', anim: 'animate-float-slow', delay: '0s' },
+  { text: '{ }', x: '85%', y: '20%', size: 'text-3xl', anim: 'animate-float-medium', delay: '1s' },
+  { text: '=>', x: '12%', y: '65%', size: 'text-xl', anim: 'animate-float-medium', delay: '2s' },
+  { text: '//', x: '78%', y: '70%', size: 'text-2xl', anim: 'animate-float-slow', delay: '3s' },
+  { text: 'fn()', x: '92%', y: '45%', size: 'text-lg', anim: 'animate-float-fast', delay: '0.5s' },
+  { text: 'import', x: '5%', y: '40%', size: 'text-sm', anim: 'animate-float-slow', delay: '1.5s' },
+  { text: '[ ]', x: '70%', y: '85%', size: 'text-xl', anim: 'animate-float-medium', delay: '2.5s' },
+  { text: '&&', x: '25%', y: '80%', size: 'text-lg', anim: 'animate-float-fast', delay: '4s' },
+  { text: '<T>', x: '50%', y: '10%', size: 'text-xl', anim: 'animate-float-slow', delay: '3.5s' },
+  { text: '::',  x: '35%', y: '90%', size: 'text-2xl', anim: 'animate-float-medium', delay: '1.2s' },
+]
+
+// Particles
+const particles = Array.from({ length: 18 }, (_, i) => ({
+  x: `${5 + (i * 37 + 13) % 90}%`,
+  y: `${5 + (i * 53 + 7) % 90}%`,
+  size: i % 3 === 0 ? 'w-1.5 h-1.5' : i % 3 === 1 ? 'w-1 h-1' : 'w-2 h-2',
+  duration: `${6 + (i % 5) * 2}s`,
+  delay: `${(i * 0.7) % 5}s`,
+  dx: `${(i % 2 === 0 ? 1 : -1) * (15 + (i % 4) * 10)}px`,
+  dy: `${-20 - (i % 3) * 20}px`,
+  color: i % 3 === 0 ? 'bg-indigo-400' : i % 3 === 1 ? 'bg-purple-400' : 'bg-pink-400',
+}))
 </script>
 
 <template>
@@ -77,6 +103,79 @@ const scrollToNext = () => {
       <div :class="['absolute top-1/4 left-1/6 w-2 h-2 rounded-full', darkMode ? 'bg-indigo-500/20' : 'bg-indigo-400/20']"></div>
       <div :class="['absolute top-1/3 right-1/4 w-1.5 h-1.5 rounded-full', darkMode ? 'bg-purple-500/20' : 'bg-purple-400/20']"></div>
       <div :class="['absolute bottom-1/3 left-1/3 w-1 h-1 rounded-full', darkMode ? 'bg-pink-500/30' : 'bg-pink-400/30']"></div>
+    </div>
+
+    <!-- Layer 3.5: Rotating gradient orb -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full rotating-gradient opacity-60 blur-3xl"
+      />
+    </div>
+
+    <!-- Layer 3.6: Floating code symbols -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <span
+        v-for="(sym, i) in codeSymbols"
+        :key="i"
+        :class="[
+          'absolute font-mono select-none',
+          sym.size, sym.anim,
+          darkMode ? 'text-indigo-400/[0.07]' : 'text-indigo-600/[0.06]'
+        ]"
+        :style="{ left: sym.x, top: sym.y, animationDelay: sym.delay }"
+      >{{ sym.text }}</span>
+    </div>
+
+    <!-- Layer 3.7: Floating particles -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div
+        v-for="(p, i) in particles"
+        :key="'p' + i"
+        :class="[
+          'absolute rounded-full animate-drift',
+          p.size,
+          darkMode ? p.color + '/20' : p.color + '/15'
+        ]"
+        :style="{
+          left: p.x,
+          top: p.y,
+          '--duration': p.duration,
+          '--delay': p.delay,
+          '--dx': p.dx,
+          '--dy': p.dy,
+        } as any"
+      />
+    </div>
+
+    <!-- Layer 3.8: Renaissance flourish SVGs (corners) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <!-- Top-left flourish -->
+      <svg class="absolute -top-4 -left-4 w-64 h-64" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.06]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#a78bfa' : '#7c3aed'" stroke-width="0.8">
+        <path d="M10,100 Q10,10 100,10" stroke-dasharray="4 4" />
+        <path d="M20,100 Q20,20 100,20" />
+        <circle cx="100" cy="10" r="3" :fill="darkMode ? '#a78bfa' : '#7c3aed'" />
+        <path d="M15,80 C25,60 40,50 60,45 C45,55 35,70 30,90" />
+        <path d="M10,60 C20,40 35,30 55,25 C40,35 30,50 25,70" />
+      </svg>
+      <!-- Top-right flourish (mirrored) -->
+      <svg class="absolute -top-4 -right-4 w-64 h-64 scale-x-[-1]" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.06]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#f0abfc' : '#c026d3'" stroke-width="0.8">
+        <path d="M10,100 Q10,10 100,10" stroke-dasharray="4 4" />
+        <path d="M20,100 Q20,20 100,20" />
+        <circle cx="100" cy="10" r="3" :fill="darkMode ? '#f0abfc' : '#c026d3'" />
+        <path d="M15,80 C25,60 40,50 60,45 C45,55 35,70 30,90" />
+      </svg>
+      <!-- Bottom-left flourish -->
+      <svg class="absolute -bottom-4 -left-4 w-64 h-64 scale-y-[-1]" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.06]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#a78bfa' : '#7c3aed'" stroke-width="0.8">
+        <path d="M10,100 Q10,10 100,10" stroke-dasharray="4 4" />
+        <path d="M20,100 Q20,20 100,20" />
+        <path d="M15,80 C25,60 40,50 60,45 C45,55 35,70 30,90" />
+      </svg>
+      <!-- Bottom-right flourish -->
+      <svg class="absolute -bottom-4 -right-4 w-64 h-64 scale-[-1]" :class="darkMode ? 'opacity-[0.04]' : 'opacity-[0.06]'" viewBox="0 0 200 200" fill="none" :stroke="darkMode ? '#f0abfc' : '#c026d3'" stroke-width="0.8">
+        <path d="M10,100 Q10,10 100,10" stroke-dasharray="4 4" />
+        <path d="M20,100 Q20,20 100,20" />
+        <path d="M15,80 C25,60 40,50 60,45 C45,55 35,70 30,90" />
+      </svg>
     </div>
 
     <!-- Layer 4: Grid texture -->
